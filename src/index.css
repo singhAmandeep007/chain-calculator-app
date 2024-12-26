@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --p10: #e29a2d;
+    --p11: #ffc267;
+    --p12: #ffeed5;
+
+    --p20: #4caf79;
+    --p21: #2dd179;
+    --p22: #c5f2da;
+
+    --p30: #0066ff;
+    --p31: #66a3ff;
+
+    --p40: #a5a5a5;
+    --p41: #cdcdcd;
+    --p42: #dbdbdb;
+    --p43: #dfdfdf;
+    --p44: #a5a5a5;
+    --p45: #252525;
+    --p46: #d3d3d3;
+    --p47: #f5f5f5;
+    --p48: #585757;
+  }
+}
