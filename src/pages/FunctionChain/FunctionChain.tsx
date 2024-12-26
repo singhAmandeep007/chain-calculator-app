@@ -7,6 +7,7 @@ import { ValueNode } from "./components/ValueNode";
 import { FunctionCard } from "./components/FunctionCard";
 
 import { TFunctionNode } from "./FunctionChain.types";
+import { Edge } from "./components/Edge";
 
 const initialFunctions: TFunctionNode[] = [
   {
@@ -15,24 +16,25 @@ const initialFunctions: TFunctionNode[] = [
     nextFunctionId: 2,
   },
   {
+    id: 4,
+    equation: "x-2",
+    nextFunctionId: 5,
+  },
+
+  {
     id: 2,
     equation: "2*x+4",
     nextFunctionId: 4,
   },
   {
-    id: 3,
-    equation: "x*2+20",
-    nextFunctionId: null,
-  },
-  {
-    id: 4,
-    equation: "x-2",
-    nextFunctionId: 5,
-  },
-  {
     id: 5,
     equation: "x/2",
     nextFunctionId: 3,
+  },
+  {
+    id: 3,
+    equation: "x*2+20",
+    nextFunctionId: null,
   },
 ];
 export const FunctionChain = () => {
@@ -107,20 +109,32 @@ export const FunctionChain = () => {
                 }}
                 className="flex justify-center gap-4"
               >
-                {isInitialFunction && (
-                  <ValueNode
-                    label="Intial value of x"
-                    value={initialValue}
-                    onValueChange={(e) => {
-                      setInitialValue(parseInt(e.target.value));
-                    }}
-                    inputProps={{
-                      type: "number",
-                    }}
-                    isEditable={true}
-                    className="w-min self-end"
-                  />
-                )}
+                {isInitialFunction &&
+                  (() => {
+                    const initalOutputConnectorId = `output-initial`;
+                    return (
+                      <>
+                        <ValueNode
+                          label="Intial value of x"
+                          value={initialValue}
+                          onValueChange={(e) => {
+                            setInitialValue(parseInt(e.target.value));
+                          }}
+                          inputProps={{
+                            type: "number",
+                          }}
+                          isEditable={true}
+                          className="w-min self-end"
+                          connectorProps={{ id: initalOutputConnectorId }}
+                        />
+                        <Edge
+                          inputElementId={`input-${func.id}`}
+                          outputElementId={initalOutputConnectorId}
+                        />
+                      </>
+                    );
+                  })()}
+
                 <FunctionCard
                   {...func}
                   functions={functions}
@@ -128,13 +142,24 @@ export const FunctionChain = () => {
                   onNextFunctionChange={handleNextFunctionChange}
                   variableMap={{ x: initialValue }}
                 />
-                {isFinalFunction && (
-                  <ValueNode
-                    label="Final Output y"
-                    value={finalValue}
-                    className="w-min self-end"
-                  />
-                )}
+                {isFinalFunction &&
+                  (() => {
+                    const finalInputConnectorId = `input-final`;
+                    return (
+                      <>
+                        <ValueNode
+                          label="Final Output y"
+                          value={finalValue}
+                          className="w-min self-end"
+                          connectorProps={{ id: finalInputConnectorId }}
+                        />
+                        <Edge
+                          inputElementId={`output-${func.id}`}
+                          outputElementId={finalInputConnectorId}
+                        />
+                      </>
+                    );
+                  })()}
               </div>
             );
           })}

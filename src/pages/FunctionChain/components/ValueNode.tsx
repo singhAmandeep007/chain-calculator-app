@@ -3,7 +3,7 @@ import React from "react";
 import { Chip } from "../../../components/Chip";
 
 import { cn } from "../../../utils/cn";
-import { Connector } from "./Connector";
+import { Connector, TConnectorProps } from "./Connector";
 
 type TEditableValueNodeProps = {
   isEditable?: true;
@@ -27,6 +27,7 @@ type TReadOnlyValueNodeProps = {
 
 type TValueNodeProps = {
   isEditable?: boolean;
+  connectorProps?: TConnectorProps;
 } & (TEditableValueNodeProps | TReadOnlyValueNodeProps) &
   React.HTMLAttributes<HTMLDivElement>;
 
@@ -37,6 +38,7 @@ export const ValueNode: React.FC<TValueNodeProps> = ({
   className,
   onValueChange,
   inputProps,
+  connectorProps,
   ...props
 }) => {
   return (
@@ -51,7 +53,10 @@ export const ValueNode: React.FC<TValueNodeProps> = ({
           isEditable ? "flex-row-reverse border-[var(--p11)]" : "border-[var(--p21)]"
         )}
       >
-        <Connector className={isEditable ? "ml-4" : "mr-4"} />
+        <Connector
+          className={isEditable ? "ml-4" : "mr-4"}
+          {...connectorProps}
+        />
         <div
           className={`absolute h-full w-px ${isEditable ? "right-8 bg-[var(--p12)]" : "left-8 bg-[var(--p22)]"}`}
         ></div>

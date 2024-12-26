@@ -9,6 +9,8 @@ import { Select } from "../../../components/Select";
 import { Label } from "../../../components/Label";
 import { Connector } from "./Connector";
 
+import { Edge } from "./Edge";
+
 import { populateEquation, validateEquation } from "../FunctionChain.utils";
 
 export type TFunctionCardProps = TFunctionNode & {
@@ -88,15 +90,20 @@ export const FunctionCard: React.FC<TFunctionCardProps> = ({
 
       <div className="mt-11 flex w-full gap-10 text-xs">
         <div className="flex flex-1 gap-1">
-          <Connector />
+          <Connector id={`input-${id}`} />
           <div className="text-[var(--p48)]">input</div>
         </div>
 
         <div className="flex flex-1 flex-row-reverse gap-1">
-          <Connector />
+          <Connector id={`output-${id}`} />
           <div className="text-[var(--p48)]">output</div>
         </div>
       </div>
+
+      <Edge
+        outputElementId={`output-${id}`}
+        inputElementId={`input-${nextFunctionId}`}
+      />
     </div>
   );
 };
